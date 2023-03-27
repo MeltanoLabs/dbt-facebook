@@ -25,4 +25,4 @@ SELECT ACCOUNT_ID,
        STATUS,
        TRACKING_SPECS,
        UPDATED_TIME
-FROM {{ source('tap_facebook', 'ad_history') }} as meltano_ad_history
+FROM {{ source('tap_facebook', 'ads') }} as meltano_ad_history

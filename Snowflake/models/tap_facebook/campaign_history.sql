@@ -54,4 +54,4 @@ SELECT ACCOUNT_ID,
        STOP_TIME,
        TOPLINE_ID,
        UPDATED_TIME
-FROM {{ source('tap_facebook', 'campaign_history') }} as meltano_campaigns_history
+FROM {{ source('tap_facebook', 'campaigns') }} as meltano_campaigns_history

@@ -15,7 +15,10 @@ sources:
       - name: ad_campaign_issues_info
       - name: ad_set_attribution
       - name: ad_tracking
-      
+      - name: ads
+      - name: adsets
+      - name: adsinsights
+      - name: campaigns
 
       
       

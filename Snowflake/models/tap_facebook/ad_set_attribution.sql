@@ -13,4 +13,4 @@ SELECT ACCOUNT_ID,
        PROMOTED_OBJECT,
        UPDATED_TIME,
        WINDOW_DAYS
-FROM {{ source('tap_facebook', 'ad_set_attribution') }} as meltano_ad_set_attribution
+FROM {{ source('tap_facebook', 'adsets') }} as meltano_ad_set_attribution

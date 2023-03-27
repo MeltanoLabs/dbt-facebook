@@ -16,4 +16,4 @@ SELECT ACCOUNT_ID,
        LEVEL,
        PROMOTED_OBJECT,
        UPDATED_TIME
-FROM {{ source('tap_facebook', 'ad_campaign_issues_info') }} as meltano_ad_campaign_issues_info
+FROM {{ source('tap_facebook', 'campaigns') }} as meltano_ad_campaign_issues_info

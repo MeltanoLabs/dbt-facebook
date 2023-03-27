@@ -18,4 +18,4 @@ SELECT ACCOUNT_ID,
        RECOMMENDATION_DATA,
        TITLE,
        UPDATED_TIME
-FROM {{ source('tap_facebook', 'adset_schedule') }} as meltano_adset_schedule
+FROM {{ source('tap_facebook', 'adsets') }} as meltano_adset_schedule

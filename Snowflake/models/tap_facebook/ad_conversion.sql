@@ -38,4 +38,7 @@ SELECT ACCOUNT_ID,
        SUBTYPE,
        TRACKING_SPECS,
        UPDATED_TIME
-FROM {{ source('tap_facebook', 'ad_conversion') }} as meltano_ad_conversion
+
+       /*TODO: Add columns 'Action_type' and 'Conversion_id'*/
+
+FROM {{ source('tap_facebook', 'ads') }} as meltano_ad_conversion
