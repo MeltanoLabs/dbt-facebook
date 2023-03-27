@@ -1,6 +1,6 @@
 name: my_meltano_project
 version: '1.0'
-profile: meltano
+profile: RYAN-MIRANDA-RAW
 config-version: 2
 require-dbt-version: [">=1.0.0", "<2.0.0"]
 model-paths:

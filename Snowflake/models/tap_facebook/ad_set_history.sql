@@ -3,8 +3,26 @@
      materialized='table'
    )
 }}
+
+{% set json_column_query %}
+select distinct json.key as column_name
+
+FROM {{ source('tap_facebook', 'ad_set_history')}},
+
+lateral flatten(input=>PROMOTED_OBJECT) json
+{% endset %}
  
-SELECT ACCOUNT_ID,
+{% set results = run_query(json_column_query) %}
+
+{% if execute %}
+{# Return the first column #}
+{% set results_list = results.columns[0].values() %}
+{% else %}
+{% set results_list = [] %}
+{% endif %}
+
+
+select ACCOUNT_ID,
        ADLABELS,
        ASSET_FEED_ID,
        ATTRIBUTION_SPEC,
@@ -63,5 +81,11 @@ SELECT ACCOUNT_ID,
        STATUS,
        TARGETING_OPTIMIZATION_TYPES,
        UPDATED_TIME,
-       USE_NEW_APP_CLICK
+       USE_NEW_APP_CLICK,
+
+{% for column_name in results_list %}
+PROMOTED_OBJECT:{{column_name}}::varchar as {{column_name}}{%- if not loop.last %},{% endif -%}
+{% endfor %}
+
+
 FROM {{ source('tap_facebook', 'ad_set_history') }} as meltano_ad_set_history
