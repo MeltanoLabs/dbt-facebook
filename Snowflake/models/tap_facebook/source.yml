@@ -19,6 +19,7 @@ sources:
       - name: adsets
       - name: adsinsights
       - name: campaigns
+      - name: creatives
 
       
       

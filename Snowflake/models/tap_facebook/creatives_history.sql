@@ -5,6 +5,23 @@
 }}
  
 SELECT ACCOUNT_ID,
-       ID,
-      /*TODO: Add 'Creatives' stream and pull data to use for this model, columns needed are found here: https://docs.google.com/spreadsheets/d/1v5lJTdeJrfiYoVx_ffgYlZiXGid5YsE1K_9eBX8-Wqg/edit#gid=0*/
+ID,
+ACTOR_ID,
+APPLINK_TREATMENT,
+AUTHORIZATION_CATEGORY,
+BODY,
+BRANDED_CONTENT_SPONSOR_PAGE_ID,
+BUNDLE_FOLDER_ID,
+CALL_TO_ACTION_TYPE,
+CATEGORIZATION_CRITERIA,
+CATEGORY_MEDIA_SOURCE,
+DESTINATION_SET_ID,
+DYNAMIC_AD_VOICE,
+EFFECTIVE_AUTHORIZATION_CATEGORY,
+EFFECTIVE_INSTAGRAM_MEDIA_ID,
+EFFECTIVE_INSTAGRAM_STORY_ID,
+EFFECTIVE_OBJECT_STORY_ID,
+ENABLE_DIRECT_INSTALL,
+IMAGE_HASH,
+       
 FROM {{ source('tap_facebook', 'creatives') }} as meltano_creative_history
