@@ -7,9 +7,19 @@
 {% set json_column_query %}
 select distinct json.key as column_name
 
-FROM {{ source('tap_facebook', 'ad_set_history')}},
+FROM {{ source('tap_facebook', 'adsets')}},
 
 lateral flatten(input=>PROMOTED_OBJECT) json
+{% endset %}
+ 
+{% set results = run_query(json_column_query) %}
+
+{% set json_column_query %}
+select distinct json.key as column_name
+
+FROM {{ source('tap_facebook', 'adsets')}},
+
+lateral flatten(input=>ATTRIBUTION_SPEC) json
 {% endset %}
  
 {% set results = run_query(json_column_query) %}
@@ -149,6 +159,10 @@ ADSET_SOURCE_ID*/
 
 {% for column_name in results_list %}
 PROMOTED_OBJECT:{{column_name}}::varchar as {{column_name}}{%- if not loop.last %},{% endif -%}
+{% endfor %}
+
+{% for column_name in results_list %}
+ATTRIBUTION_SPEC:{{column_name}}::varchar as {{column_name}}{%- if not loop.last %},{% endif -%}
 {% endfor %}
 
 
