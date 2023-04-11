@@ -12,23 +12,47 @@ FROM {{ source('tap_facebook', 'adsets')}},
 lateral flatten(input=>PROMOTED_OBJECT) json
 {% endset %}
  
-{% set results = run_query(json_column_query) %}
+{% set promoted_object_results = run_query(json_column_query) %}
+
+{% if execute %}
+{# Return the first column #}
+{% set promoted_object_list = promoted_object_results.columns[0].values() %}
+{% else %}
+{% set promoted_object_list = [] %}
+{% endif %}
 
 {% set json_column_query %}
 select distinct json.key as column_name
 
 FROM {{ source('tap_facebook', 'adsets')}},
 
-lateral flatten(input=>ATTRIBUTION_SPEC) json
+lateral flatten(input=>ATTRIBUTION_SPEC[0]) json
 {% endset %}
  
-{% set results = run_query(json_column_query) %}
+{% set attribution_spec_results = run_query(json_column_query) %}
 
 {% if execute %}
 {# Return the first column #}
-{% set results_list = results.columns[0].values() %}
+{% set attribution_spec_list = attribution_spec_results.columns[0].values() %}
 {% else %}
-{% set results_list = [] %}
+{% set attribution_spec_list = [] %}
+{% endif %}
+
+{% set json_column_query %}
+select distinct json.key as column_name
+
+FROM {{ source('tap_facebook', 'adsets')}},
+
+lateral flatten(input=>LEARNING_STAGE_INFO) json
+{% endset %}
+ 
+{% set learning_stage_results = run_query(json_column_query) %}
+
+{% if execute %}
+{# Return the first column #}
+{% set learning_stage_list = learning_stage_results.columns[0].values() %}
+{% else %}
+{% set learning_stage_list = [] %}
 {% endif %}
 
 
@@ -36,11 +60,7 @@ select ACCOUNT_ID,
        ADLABELS,
        ASSET_FEED_ID,
        ATTRIBUTION_SPEC,
-       BID_AMOUNT,
        BID_INFO,
-       BID_INFO_ACTIONS,
-       BID_INFO_IMPRESSIONS,
-       BID_STRATEGY,
        BILLING_EVENT,
        BUDGET_REMAINING,
        CAMPAIGN_ATTRIBUTION,
@@ -59,30 +79,12 @@ select ACCOUNT_ID,
        LEARNING_STAGE_INFO,
        LIFETIME_BUDGET,
        LIFETIME_IMPS,
-       LIFETIME_MIN_SPEND_TARGET,
-       LIFETIME_SPEND_CAP,
        MULTI_OPTIMIZATION_GOAL_WEIGHT,
        NAME,
        OPTIMIZATION_GOAL,
        OPTIMIZATION_SUB_EVENT,
        PACING_TYPE,
        PROMOTED_OBJECT,
-       PROMOTED_OBJECT_APPLICATION_TYPE,
-       PROMOTED_OBJECT_CUSTOM_CONVERSION_ID,
-       PROMOTED_OBJECT_CUSTOM_EVENT_STR,
-       PROMOTED_OBJECT_CUSTOM_EVENT_TYPE,
-       PROMOTED_OBJECT_EVENT_ID,
-       PROMOTED_OBJECT_OBJECT_STORE_URL,
-       PROMOTED_OBJECT_OFFER_ID,
-       PROMOTED_OBJECT_OFFLINE_CONVERSION_DATA_SET_ID,
-       PROMOTED_OBJECT_PAGE_ID,
-       PROMOTED_OBJECT_PIXEL_AGGREGATION_RULE,
-       PROMOTED_OBJECT_PIXEL_ID,
-       PROMOTED_OBJECT_PIXEL_RULE,
-       PROMOTED_OBJECT_PLACE_PAGE_SET_ID,
-       PROMOTED_OBJECT_PRODUCT_CATALOG_ID,
-       PROMOTED_OBJECT_PRODUCT_SET_ID,
-       PROMOTED_OBJECT_RETENTION_DAYS,
        RECURRING_BUDGET_SEMANTICS,
        REVIEW_FEEDBACK,
        RF_PREDICTION_ID,
@@ -94,7 +96,8 @@ select ACCOUNT_ID,
        USE_NEW_APP_CLICK,
 
       /*TODO: Add the following columns:
-PROMOTED_OBJECT_APPLICATION_ID LEARNING_STAGE_INFO_ATTRIBUTION_WINDOWS
+PROMOTED_OBJECT_APPLICATION_ID 
+LEARNING_STAGE_INFO_ATTRIBUTION_WINDOWS
 LEARNING_STAGE_INFO_CONVERSIONS
 LEARNING_STAGE_INFO_LAST_SIG_EDIT_TS
 LEARNING_STAGE_INFO_STATUS
@@ -154,16 +157,42 @@ TARGETING_EXCLUDED_GEO_LOCATIONS_GEO_MARKETS
 TARGETING_EXCLUDED_GEO_LOCATIONS_ELECTORAL_DISTRICT
 TARGETING_EXCLUDED_GEO_LOCATIONS_LOCATION_TYPES
 TARGETING_EXCLUDED_GEO_LOCATIONS_COUNTRY_GROUPS
-ADSET_SOURCE_ID*/
+ADSET_SOURCE_ID
+BID_AMOUNT
+BID_INFO_ACTIONS
+BID_INFO_IMPRESSIONS
+BID_STRATEGY
+LIFETIME_MIN_SPEND_TARGET
+LIFETIME_SPEND_CAP
+PROMOTED_OBJECT_APPLICATION_TYPE
+PROMOTED_OBJECT_CUSTOM_CONVERSION_ID
+PROMOTED_OBJECT_CUSTOM_EVENT_STR
+PROMOTED_OBJECT_CUSTOM_EVENT_TYPE
+PROMOTED_OBJECT_EVENT_ID
+PROMOTED_OBJECT_OBJECT_STORE_URL
+PROMOTED_OBJECT_OFFER_ID
+PROMOTED_OBJECT_OFFLINE_CONVERSION_DATA_SET_ID
+PROMOTED_OBJECT_PAGE_ID
+PROMOTED_OBJECT_PIXEL_AGGREGATION_RULE
+PROMOTED_OBJECT_PIXEL_ID
+PROMOTED_OBJECT_PIXEL_RULE
+PROMOTED_OBJECT_PLACE_PAGE_SET_ID
+PROMOTED_OBJECT_PRODUCT_CATALOG_ID
+PROMOTED_OBJECT_PRODUCT_SET_ID
+PROMOTED_OBJECT_RETENTION_DAYS*/
 
 
-{% for column_name in results_list %}
-PROMOTED_OBJECT:{{column_name}}::varchar as {{column_name}}{%- if not loop.last %},{% endif -%}
+{% for column_name in promoted_object_list %}
+PROMOTED_OBJECT:{{column_name}}::varchar as "PROMOTED_OBJECT_{{column_name}}"{%- if not loop.last %},{% endif -%}
+{% endfor %},
+
+{% for column_name in attribution_spec_list %}
+ATTRIBUTION_SPEC:{{column_name}}::varchar as "ATTRIBUTION_SPEC_{{column_name}}"{%- if not loop.last %},{% endif -%}
+{% endfor %},
+
+{% for column_name in learning_stage_list %}
+LEARNING_STAGE_INFO:{{column_name}}::varchar as "LEARNING_STAGE_INFO_{{column_name}}"{%- if not loop.last %},{% endif -%}
 {% endfor %}
 
-{% for column_name in results_list %}
-ATTRIBUTION_SPEC:{{column_name}}::varchar as {{column_name}}{%- if not loop.last %},{% endif -%}
-{% endfor %}
 
-
-FROM {{ source('tap_facebook', 'adsets') }} as meltano_ad_set_history
+FROM {{ source('tap_facebook', 'adsets') }} as ad_set_history
