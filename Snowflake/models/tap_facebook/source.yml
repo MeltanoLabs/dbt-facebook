@@ -17,11 +17,13 @@ sources:
       - name: ad_tracking
       - name: pacing_type
       - name: creative_history
+      - name: label_history
       - name: ads
       - name: adsets
       - name: adsinsights
       - name: campaigns
       - name: creatives
+      - name: adlabels
 
       
       
