@@ -9,13 +9,13 @@ SELECT ACCOUNT_ID,
        BLAME_FIELD,
        CODE,
        CONFIDENCE,
-       CREATED_TIME,
+       TO_TIMESTAMP_NTZ(CREATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as CREATED_TIME,
        ID,
        IMPORTANCE,
-       INDEX,
+       0 as INDEX,
        MESSAGE,
        PROMOTED_OBJECT,
        RECOMMENDATION_DATA,
        TITLE,
-       UPDATED_TIME
+       TO_TIMESTAMP_NTZ(UPDATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as UPDATED_TIME
 FROM {{ source('tap_facebook', 'ads') }} as meltano_ad_recommendation

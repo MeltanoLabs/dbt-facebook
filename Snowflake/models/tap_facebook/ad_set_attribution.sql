@@ -22,10 +22,10 @@ lateral flatten(input=>ATTRIBUTION_SPEC[0]) json
 {% endif %}
  
 SELECT ACCOUNT_ID,
-       CREATED_TIME as AD_SET_CREATED_TIME,
+       TO_TIMESTAMP_NTZ(CREATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as AD_SET_CREATED_TIME,
        ID,
        ATTRIBUTION_SPEC,
-       UPDATED_TIME as AD_SET_UPDATED_TIME,
+       TO_TIMESTAMP_NTZ(UPDATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as AD_SET_UPDATED_TIME,
 
 
 {% for column_name in attribution_spec_list %}

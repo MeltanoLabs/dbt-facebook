@@ -36,7 +36,7 @@ SELECT ACCOUNT_ID,
        APPLICATION,
        CAMPAIGN_ID,
        CONVERSION_SPECS,
-       CREATED_TIME,
+       TO_TIMESTAMP_NTZ(CREATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as CREATED_TIME,
        CREATIVE,
        DATASET,
        EVENT,
@@ -45,7 +45,7 @@ SELECT ACCOUNT_ID,
        FB_PIXEL,
        FB_PIXEL_EVENT,
        ID,
-       INDEX,
+       0 as INDEX,
        LEADGEN,
        NAME,
        OBJECT,
@@ -64,7 +64,7 @@ SELECT ACCOUNT_ID,
        RESPONSE,
        SUBTYPE,
        TRACKING_SPECS,
-       UPDATED_TIME
+       TO_TIMESTAMP_NTZ(UPDATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as UPDATED_TIME
 
 
 {% for column_name in results_list %}
