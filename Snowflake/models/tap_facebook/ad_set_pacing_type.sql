@@ -4,7 +4,7 @@
    )
 }}
  
-SELECT ADSET_ID,
+SELECT ID,
        UPDATED_TIME,
        INDEX,
        NAME
