@@ -4,11 +4,11 @@
    )
 }}
  
-SELECT ADSET_ID,
+SELECT ID,
        UPDATED_TIME,
        INDEX,
-       START_TIME, /* TODO: Find Start_minute column and replace here */
-       END_TIME, /* TODO: Find End_minute column and replace here */
+       MINUTE(TO_TIMESTAMP_NTZ(START_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM')) as START_MINUTE,
+       MINUTE(TO_TIMESTAMP_NTZ(END_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM')) as END_MINUTE
        
       /* TODO: Add Timezone_type column */
 
