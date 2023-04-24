@@ -55,26 +55,26 @@ lateral flatten(input=>TRACKING_SPECS[0]) json
 {% set tracking_sepcs_list = [] %}
 {% endif %}
  
-SELECT ACCOUNT_ID,
-       ADLABELS,
-       ADSET_ID,
+SELECT ID,
+       TO_TIMESTAMP_NTZ(UPDATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as UPDATED_TIME,
+       ACCOUNT_ID,
+       CAMPAIGN_ID,
+{% for column_name in creative_list %}
+CREATIVE:{{column_name}}::varchar as "CREATIVE_ID"{%- if not loop.last %},{% endif -%}
+{% endfor %},
        BID_AMOUNT,
        BID_INFO,
        BID_TYPE,
-       CAMPAIGN_ID,
        CONVERSION_DOMAIN,
        CONVERSION_SPECS,
        TO_TIMESTAMP_NTZ(CREATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as CREATED_TIME,
-       CREATIVE,
        EFFECTIVE_STATUS,
-       ID,
        LAST_UPDATED_BY_APP_ID,
        NAME,
-       RECOMMENDATIONS,
-       SOURCE_AD_ID as AD_SOURCE_ID,
        STATUS,
+       ADSET_ID,
+       SOURCE_AD_ID as AD_SOURCE_ID,
        TRACKING_SPECS,
-       TO_TIMESTAMP_NTZ(UPDATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as UPDATED_TIME,
        GLOBAL_ADS_ABOUT_SOCIAL_ISSUES_ELECTIONS_OR_POLITICS,
        GLOBAL_ADULT_CONTENT,
        GLOBAL_ADVERTISING_POLICIES,
@@ -125,9 +125,6 @@ SELECT ACCOUNT_ID,
 
 
 
-{% for column_name in creative_list %}
-CREATIVE:{{column_name}}::varchar as "CREATIVE_ID"{%- if not loop.last %},{% endif -%}
-{% endfor %},
 
 {% for column_name in bid_info_list %}
 BID_INFO:{{column_name}}::varchar as "BID_INFO_{{column_name}}"{%- if not loop.last %},{% endif -%}
