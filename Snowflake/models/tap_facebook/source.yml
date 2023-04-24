@@ -24,4 +24,7 @@ sources:
       - name: campaigns
       - name: creatives
       - name: adlabels
-      - name: accounts
+      - name: adaccounts
+
+      
+      
