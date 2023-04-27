@@ -26,6 +26,7 @@ SELECT ACCOUNT_ID,
        ID,
        ATTRIBUTION_SPEC,
        TO_TIMESTAMP_NTZ(UPDATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as AD_SET_UPDATED_TIME,
+       _SDC_BATCHED_AT,
 
 
 {% for column_name in attribution_spec_list %}

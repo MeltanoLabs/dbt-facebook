@@ -10,6 +10,7 @@ SELECT ID as AD_SET_ID,
        0 as INDEX,
        1 as MAX_FREQUENCY,
        7 as INTERVAL_DAYS,
-       BILLING_EVENT as EVENT
+       BILLING_EVENT as EVENT,
+       _SDC_BATCHED_AT
        
 FROM {{ source('tap_facebook', 'adsets') }} as FREQUENCY_CONTROL

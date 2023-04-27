@@ -84,6 +84,7 @@ SELECT AGE,
        EXTENDED_CREDIT_INVOICE_GROUP_EMAILS,
        EXTENDED_CREDIT_INVOICE_GROUP_NAME,
        CAPABILITIES,
-       ID
+       ID,
+       _SDC_BATCHED_AT
 
 FROM {{ source('tap_facebook', 'adaccounts') }} as account_history
