@@ -54,7 +54,5 @@ SELECT ID,
        PROMOTED_OBJECT_RETENTION_DAYS,
        _SDC_BATCHED_AT
 
-       PROMOTED_OBJECT_RETENTION_DAYS
-
 
 FROM {{ source('tap_facebook', 'campaigns') }} as meltano_campaigns_history
