@@ -21,4 +21,5 @@ SELECT ADSET_ID,
        INLINE_LINK_CLICK_CTR,
        _SDC_BATCHED_AT
 
+
 FROM {{ source('tap_facebook', 'adsinsights') }} as meltano_basic_ad_set

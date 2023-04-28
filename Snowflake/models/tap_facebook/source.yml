@@ -25,6 +25,8 @@ sources:
       - name: creatives
       - name: adlabels
       - name: adaccounts
+      - name: customconversions
+      - name: customaudiences
 
       
       
