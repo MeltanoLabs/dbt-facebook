@@ -1,7 +1,6 @@
 version: 2
 sources:
   - name: tap_facebook
-    loader: meltano
     schema: MELTANO_FACEBOOK
     tables: 
       - name: ad_history
