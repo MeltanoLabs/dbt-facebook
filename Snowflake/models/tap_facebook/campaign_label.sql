@@ -1,6 +1,6 @@
 {{
    config(
-     materialized='table'
+     materialized='view'
    )
 }}
  
@@ -8,6 +8,7 @@ SELECT ACCOUNT_ID,
        ADLABELS,
        TO_TIMESTAMP_NTZ(CREATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as CAMPAIGN_CREATED_TIME,
        ID,
-       TO_TIMESTAMP_NTZ(UPDATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as CAMPAIGN_UPDATED_TIME
+       TO_TIMESTAMP_NTZ(UPDATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as CAMPAIGN_UPDATED_TIME,
+       _SDC_BATCHED_AT
        
 FROM {{ source('tap_facebook', 'campaigns') }} as campaign_label

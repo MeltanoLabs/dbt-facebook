@@ -1,6 +1,6 @@
 {{
    config(
-     materialized='table'
+     materialized='view'
    )
 }}
 
@@ -122,6 +122,7 @@ CREATIVE:{{column_name}}::varchar as "CREATIVE_ID"{%- if not loop.last %},{% end
        PLACEMENT_SPECIFIC_INSTAGRAM_SPYWARE_OR_MALWARE,
        PLACEMENT_SPECIFIC_INSTAGRAM_UNREALISTIC_OUTCOMES,
        PLACEMENT_SPECIFIC_INSTAGRAM_UNSAFE_SUBSTANCES, 
+       _SDC_BATCHED_AT,
 
 
 

@@ -1,6 +1,6 @@
 {{
    config(
-     materialized='table'
+     materialized='view'
    )
 }}
 
@@ -30,6 +30,7 @@ FROM (SELECT ID as ADLABELS_ID,
              TO_TIMESTAMP_NTZ(CREATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as CREATED_TIME,
               ACCOUNT,
               TO_TIMESTAMP_NTZ(UPDATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as UPDATED_TIME,
+              _SDC_BATCHED_AT,
 
 
       {% for column_name in account_list %}

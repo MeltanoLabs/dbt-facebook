@@ -1,6 +1,6 @@
 {{
    config(
-     materialized='table'
+     materialized='view'
    )
 }}
 
@@ -105,6 +105,7 @@ SELECT ACCOUNT_ID,
        URL_TAGS,
        USE_PAGE_ACTOR_OVERRIDE,
        VIDEO_ID,
+       _SDC_BATCHED_AT,
 
 
 {% for column_name in object_story_list %}

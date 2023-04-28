@@ -1,6 +1,6 @@
 {{
    config(
-     materialized='table'
+     materialized='view'
    )
 }}
  
@@ -51,6 +51,10 @@ SELECT ID,
        PROMOTED_OBJECT_PLACE_PAGE_SET_ID,
        PROMOTED_OBJECT_PRODUCT_CATALOG_ID,
        PROMOTED_OBJECT_PRODUCT_SET_ID,
+       PROMOTED_OBJECT_RETENTION_DAYS,
+       _SDC_BATCHED_AT
+
        PROMOTED_OBJECT_RETENTION_DAYS
+
 
 FROM {{ source('tap_facebook', 'campaigns') }} as meltano_campaigns_history

@@ -1,6 +1,6 @@
 {{
    config(
-     materialized='table'
+     materialized='view'
    )
 }}
  
@@ -18,6 +18,8 @@ SELECT AD_ID,
        CAST(SPEND as float) as SPEND,
        AD_NAME,
        ADSET_NAME,
-       INLINE_LINK_CLICK_CTR
+       INLINE_LINK_CLICK_CTR,
+       _SDC_BATCHED_AT
+
 
 FROM {{ source('tap_facebook', 'adsinsights') }} as meltano_basic_ads

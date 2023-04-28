@@ -1,11 +1,12 @@
 {{
    config(
-     materialized='table'
+     materialized='view'
    )
 }}
  
 SELECT ID,
-       TO_TIMESTAMP_NTZ(UPDATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as UPDATED_TIME
+       TO_TIMESTAMP_NTZ(UPDATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as UPDATED_TIME,
+       _SDC_BATCHED_AT
        /*
         TODO: ADD missing columns: CUSTOM_AUDIENCE_ID, IS_EXCLUDED
        */

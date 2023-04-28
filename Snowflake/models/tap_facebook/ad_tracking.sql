@@ -1,6 +1,6 @@
 {{
    config(
-     materialized='table'
+     materialized='view'
    )
 }}
 
@@ -47,6 +47,7 @@ SELECT ACCOUNT_ID,
        NAME,
        TRACKING_SPECS,
        TO_TIMESTAMP_NTZ(UPDATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as UPDATED_TIME,
+       _SDC_BATCHED_AT,
 
 /*TODO: Add columns 'Action_type',
 'Conversion_id',
