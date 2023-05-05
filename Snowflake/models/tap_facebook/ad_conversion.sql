@@ -70,7 +70,7 @@ SELECT ACCOUNT_ID,
 
 {% for column_name in results_list %}
 CONVERSION_SPECS:{{column_name}}::varchar as {{column_name}}{%- if not loop.last %},{% endif -%}
-{% endfor %}
+{% endfor %},
 
 {% for column_name in results_list %}
 TRACKING_SPECS:{{column_name}}::varchar as {{column_name}}{%- if not loop.last %},{% endif -%}
