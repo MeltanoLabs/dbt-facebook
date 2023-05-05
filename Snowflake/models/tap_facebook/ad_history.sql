@@ -72,7 +72,7 @@ CREATIVE:{{column_name}}::varchar as "CREATIVE_ID"{%- if not loop.last %},{% end
        LAST_UPDATED_BY_APP_ID,
        NAME,
        STATUS,
-       ADSET_ID,
+       ADSET_ID as AD_SET_ID,
        SOURCE_AD_ID as AD_SOURCE_ID,
        TRACKING_SPECS,
        GLOBAL_ADS_ABOUT_SOCIAL_ISSUES_ELECTIONS_OR_POLITICS,
