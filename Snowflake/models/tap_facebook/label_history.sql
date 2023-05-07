@@ -33,6 +33,7 @@ FROM (SELECT ID as ADLABELS_ID,
              
              {% for column_name in account_list %}
              ACCOUNT:{{column_name}}::varchar as {{column_name}}{%- if not loop.last %},{% endif -%}
-             {% endfor %}       
+             {% endfor %},
+       _SDC_BATCHED_AT       
 
        FROM {{ source('tap_facebook', 'adlabels') }} as label_history)
