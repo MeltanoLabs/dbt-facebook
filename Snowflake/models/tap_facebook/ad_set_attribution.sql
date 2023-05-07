@@ -21,11 +21,10 @@ lateral flatten(input=>ATTRIBUTION_SPEC[0]) json
 {% set attribution_spec_list = [] %}
 {% endif %}
  
-SELECT ACCOUNT_ID,
-       TO_TIMESTAMP_NTZ(CREATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as AD_SET_CREATED_TIME,
-       ID,
-       ATTRIBUTION_SPEC,
+SELECT ID as AD_SET_ID,
        TO_TIMESTAMP_NTZ(UPDATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as AD_SET_UPDATED_TIME,
+       0 as INDEX /* Add INDEX values for column*/
+       ATTRIBUTION_SPEC,
        _SDC_BATCHED_AT,
 
 
