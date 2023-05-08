@@ -9,73 +9,142 @@ select distinct json.key as column_name
 
 FROM {{ source('tap_facebook', 'ads')}},
 
-lateral flatten(input=>CONVERSION_SPECS) json
-
+lateral flatten(input=>CREATIVE) json
 {% endset %}
+ 
+{% set creative_results = run_query(json_column_query) %}
+
+{% if execute %}
+{# Return the first column #}
+{% set creative_list = creative_results.columns[0].values() %}
+{% else %}
+{% set creative_list = [] %}
+{% endif %}
 
 {% set json_column_query %}
 select distinct json.key as column_name
 
-FROM {{ source('tap_facebook', 'ads')}},
+FROM (SELECT REPLACE(ARRAY_TO_STRING(ARRAY_SLICE(PARSE_JSON(TRACKING_SPECS), 1, 2), ''), '.', '_') as TRACKING_COLUMNS FROM {{ source('tap_facebook', 'ads') }}),
 
-lateral flatten(input=>TRACKING_SPECS) json
-
+lateral flatten(input=>PARSE_JSON(TRACKING_COLUMNS)) json
 {% endset %}
  
-{% set results = run_query(json_column_query) %}
+{% set tracking_results = run_query(json_column_query) %}
 
 {% if execute %}
 {# Return the first column #}
-{% set results_list = results.columns[0].values() %}
+{% set tracking_list = tracking_results.columns[0].values() %}
 {% else %}
-{% set results_list = [] %}
+{% set tracking_list = [] %}
 {% endif %}
+
+{% set json_column_query %}
+select distinct json.key as column_name
+
+FROM (SELECT REPLACE(ARRAY_TO_STRING(PARSE_JSON(CONVERSION_SPECS), ''), '.', '_') as CONVERSION_COLUMNS FROM {{ source('tap_facebook', 'ads') }}),
+
+lateral flatten(input=>PARSE_JSON(CONVERSION_COLUMNS)) json
+{% endset %}
  
-SELECT ACCOUNT_ID,
-       ADSET_ID,
+{% set conversion_results = run_query(json_column_query) %}
+
+{% if execute %}
+{# Return the first column #}
+{% set conversion_list = conversion_results.columns[0].values() %}
+{% else %}
+{% set conversion_list = [] %}
+{% endif %}
+
+ 
+SELECT AD_ID,
+       AD_UPDATED_TIME,
        APPLICATION,
-       CAMPAIGN_ID,
-       CONVERSION_SPECS,
-       TO_TIMESTAMP_NTZ(CREATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as CREATED_TIME,
        CREATIVE,
        DATASET,
        EVENT,
-       EVENT_CREATOR,
        EVENT_TYPE,
-       FB_PIXEL,
+       "TRACKING_COLUMNS_fb_pixel" as FB_PIXEL,
        FB_PIXEL_EVENT,
-       ID,
-       0 as INDEX,
        LEADGEN,
-       NAME,
        OBJECT,
-       OBJECT_DOMAIN,
        OFFER,
-       OFFER_CREATOR,
        OFFSITE_PIXEL,
-       PAGE,
-       PAGE_PARENT,
-       POST,
-       POST_OBJECT,
-       POST_OBJECT_WALL,
-       POST_WALL,
+       "TRACKING_COLUMNS_page" as PAGE,
+       "TRACKING_COLUMNS_post" as POST,
        QUESTION,
-       QUESTION_CREATOR,
        RESPONSE,
        SUBTYPE,
-       TRACKING_SPECS,
-       TO_TIMESTAMP_NTZ(UPDATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as UPDATED_TIME,
-       _SDC_BATCHED_AT,
+       "CONVERSION_COLUMNS_action_type" as ACTION_TYPE,
+       EVENT_CREATOR,
+       OBJECT_DOMAIN,
+       OFFER_CREATOR,
+       PAGE_PARENT,
+       POST_OBJECT_WALL,
+       "TRACKING_COLUMNS_post_wall" as POST_WALL,
+       POST_OBJECT,
+       QUESTION_CREATOR,
+       REPLACE(REPLACE(REPLACE("CONVERSION_COLUMNS_conversion_id",'[',''),']',''),'"','')::number as CONVERSION_ID
 
+FROM (SELECT AD_ID,
+             AD_UPDATED_TIME,
+             APPLICATION,
+             CREATIVE
+             DATASET,
+             EVENT,
+             EVENT_CREATOR,
+             EVENT_TYPE,
+             FB_PIXEL_EVENT,
+             LEADGEN,
+             OBJECT,
+             OBJECT_DOMAIN,
+             OFFER,
+             OFFER_CREATOR,
+             OFFSITE_PIXEL,
+             PAGE_PARENT,
+             POST_OBJECT,
+             POST_OBJECT_WALL,
+             QUESTION,
+             QUESTION_CREATOR,
+             RESPONSE,
+             SUBTYPE,
 
-{% for column_name in results_list %}
-CONVERSION_SPECS:{{column_name}}::varchar as {{column_name}}{%- if not loop.last %},{% endif -%}
-{% endfor %},
+       {% for column_name in tracking_list %}
+       PARSE_JSON(TRACKING_COLUMNS):{{column_name}}::varchar as "TRACKING_COLUMNS_{{column_name}}"{%- if not loop.last %},{% endif -%}
+       {% endfor %},
 
-{% for column_name in results_list %}
-TRACKING_SPECS:{{column_name}}::varchar as {{column_name}}{%- if not loop.last %},{% endif -%}
-{% endfor %}
+       CREATIVE,
 
-       /*TODO: Add columns 'Action_type' and 'Conversion_id'*/
+       {% for column_name in conversion_list %}
+       PARSE_JSON(CONVERSION_COLUMNS):{{column_name}}::varchar as "CONVERSION_COLUMNS_{{column_name}}"{%- if not loop.last %},{% endif -%}
+       {% endfor %}
 
-FROM {{ source('tap_facebook', 'ads') }} as meltano_ad_conversion
+FROM (SELECT ID as AD_ID,
+             APPLICATION,
+             DATASET,
+             EVENT,
+             EVENT_CREATOR,
+             EVENT_TYPE,
+             FB_PIXEL_EVENT,
+             LEADGEN,
+             OBJECT,
+             OBJECT_DOMAIN,
+             OFFER,
+             OFFER_CREATOR,
+             OFFSITE_PIXEL,
+             PAGE_PARENT,
+             POST_OBJECT,
+             POST_OBJECT_WALL,
+             QUESTION,
+             QUESTION_CREATOR,
+             RESPONSE,
+             SUBTYPE,
+             REPLACE(ARRAY_TO_STRING(ARRAY_SLICE(PARSE_JSON(TRACKING_SPECS), 1, 2), ''), '.', '_') as TRACKING_COLUMNS,
+             REPLACE(ARRAY_TO_STRING(PARSE_JSON(CONVERSION_SPECS), ''), '.', '_') as CONVERSION_COLUMNS,
+       
+             TO_TIMESTAMP_NTZ(UPDATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as AD_UPDATED_TIME,
+
+             {% for column_name in creative_list %}
+             CREATIVE:{{column_name}}::varchar as "CREATIVE"{%- if not loop.last %},{% endif -%}
+             {% endfor %}
+
+FROM {{ source('tap_facebook', 'ads') }} as meltano_ad_conversion))
