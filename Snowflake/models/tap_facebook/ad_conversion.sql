@@ -83,7 +83,8 @@ SELECT AD_ID,
        "TRACKING_COLUMNS_post_wall" as POST_WALL,
        POST_OBJECT,
        QUESTION_CREATOR,
-       REPLACE(REPLACE(REPLACE("CONVERSION_COLUMNS_conversion_id",'[',''),']',''),'"','')::number as CONVERSION_ID
+       REPLACE(REPLACE(REPLACE("CONVERSION_COLUMNS_conversion_id",'[',''),']',''),'"','')::number as CONVERSION_ID,
+       _SDC_BATCHED_AT
 
 FROM (SELECT AD_ID,
              AD_UPDATED_TIME,
@@ -116,7 +117,8 @@ FROM (SELECT AD_ID,
 
        {% for column_name in conversion_list %}
        PARSE_JSON(CONVERSION_COLUMNS):{{column_name}}::varchar as "CONVERSION_COLUMNS_{{column_name}}"{%- if not loop.last %},{% endif -%}
-       {% endfor %}
+       {% endfor %},
+       _SDC_BATCHED_AT
 
 FROM (SELECT ID as AD_ID,
              APPLICATION,
@@ -145,6 +147,7 @@ FROM (SELECT ID as AD_ID,
 
              {% for column_name in creative_list %}
              CREATIVE:{{column_name}}::varchar as "CREATIVE"{%- if not loop.last %},{% endif -%}
-             {% endfor %}
+             {% endfor %},
+             _SDC_BATCHED_AT
 
 FROM {{ source('tap_facebook', 'ads') }} as meltano_ad_conversion))
