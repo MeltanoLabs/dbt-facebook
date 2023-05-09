@@ -141,7 +141,8 @@ SELECT ACCOUNT_ID,
        TEMPLATE_URL_SPEC_WINDOWS_PHONE_APP_ID,
        TEMPLATE_URL_SPEC_WINDOWS_PHONE_APP_NAME,
        TEMPLATE_URL_SPEC_WINDOWS_PHONE_URL,
-       PARSE_JSON("ASSET_FEED_SPEC_link_urls") as ASSET_FEED_SPEC_LINK_URLS
+       PARSE_JSON("ASSET_FEED_SPEC_link_urls") as ASSET_FEED_SPEC_LINK_URLS,
+       _SDC_BATCHED_AT
 
 FROM (SELECT ACCOUNT_ID,
        ID,
@@ -238,7 +239,8 @@ FROM (SELECT ACCOUNT_ID,
 
        {% for column_name in asset_feed_list %}
        PARSE_JSON(ASSET_FEED_SPEC):{{column_name}}::varchar as "ASSET_FEED_SPEC_{{column_name}}"{%- if not loop.last %},{% endif -%}
-       {% endfor %}
+       {% endfor %},
+       _SDC_BATCHED_AT
 
 FROM {{ source('tap_facebook', 'creatives') }} as creative_history)
   
