@@ -66,7 +66,8 @@ SELECT AD_ID,
        POST_OBJECT_WALL,
        "TRACKING_COLUMNS_post_wall" as POST_WALL,
        POST_OBJECT,
-       QUESTION_CREATOR
+       QUESTION_CREATOR,
+       _SDC_BATCHED_AT
 
 FROM (SELECT AD_ID,
              AD_UPDATED_TIME,
@@ -95,7 +96,8 @@ FROM (SELECT AD_ID,
        PARSE_JSON(TRACKING_COLUMNS):{{column_name}}::varchar as "TRACKING_COLUMNS_{{column_name}}"{%- if not loop.last %},{% endif -%}
        {% endfor %},
 
-       CREATIVE
+       CREATIVE,
+       _SDC_BATCHED_AT
 
 FROM (SELECT ID as AD_ID,
              APPLICATION,
@@ -123,7 +125,8 @@ FROM (SELECT ID as AD_ID,
 
              {% for column_name in creative_list %}
              CREATIVE:{{column_name}}::varchar as "CREATIVE"{%- if not loop.last %},{% endif -%}
-             {% endfor %}
+             {% endfor %},
+             _SDC_BATCHED_AT
 
 FROM {{ source('tap_facebook', 'ads') }} as meltano_ad_tracking))
  
