@@ -1,0 +1,48 @@
+{{
+   config(
+     materialized='view'
+   )
+}}
+ 
+SELECT ID,
+       TO_TIMESTAMP_NTZ(UPDATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as UPDATED_TIME,
+       ACCOUNT_ID,
+       AD_BREAKS,
+       BACKDATED_TIME,
+       BACKDATED_TIME_GRANULARITY,
+       CONTENT_CATEGORY,
+       CONTENT_TAGS,
+       TO_TIMESTAMP_NTZ(CREATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as CREATED_TIME,
+       CUSTOM_LABELS,
+       DESCRIPTION,
+       EMBED_HTML,
+       EMBEDDABLE,
+       EVENT,
+       FORMAT,
+       ICON,
+       IS_CROSSPOST_VIDEO,
+       IS_CROSSPOSTING_ELIGIBLE,
+       IS_EPISODE,
+       IS_INSTAGRAM_ELIGIBLE,
+       IS_REFERENCE_ONLY,
+       LENGTH::float as LENGTH,
+       LIVE_STATUS,
+       MUSIC_VIDEO_COPYRIGHT,
+       PERMALINK_URL,
+       PLACE,
+       POST_VIEWS,
+       PREMIERE_LIVING_ROOM_STATUS,
+       PRIVACY,
+       PUBLISHED,
+       SCHEDULED_PUBLISH_TIME,
+       SOURCE,
+       STATUS_PROCESSING_PROGRESS,
+       STATUS_VALUE,
+       TITLE,
+       UNIVERSAL_VIDEO_ID,
+       VIEWS,
+       FROM_OBJECT,
+       _SDC_BATCHED_AT
+
+FROM {{ source('tap_facebook', 'advideos') }} as ad_video_history
+    
