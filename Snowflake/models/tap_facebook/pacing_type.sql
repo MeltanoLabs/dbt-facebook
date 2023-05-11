@@ -1,14 +1,8 @@
-{{
-   config(
-     materialized='view'
-   )
-}}
- 
-SELECT ID as AD_SET_ID,
-       TO_TIMESTAMP_NTZ(UPDATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as AD_SET_UPDATED_TIME,
-       NULL as INDEX, /* Add value for INDEX*/
-       ARRAY_TO_STRING(PARSE_JSON(PACING_TYPE), '') as NAME,
-       _SDC_BATCHED_AT
+SELECT id as ad_set_id,
+       TO_TIMESTAMP_NTZ(updated_time, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as ad_set_updated_time,
+       NULL as index, --Add data for INDEX
+       ARRAY_TO_STRING(PARSE_JSON(pacing_type), '') as name,
+       _sdc_batched_at
 
 
 FROM {{ source('tap_facebook', 'adsets') }} as pacing_type
