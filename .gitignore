@@ -7,6 +7,7 @@ __pycache__/
 profiles.yml
 .DS_Store
 */.DS_Store
+Snowflake/models/tap_facebook/.DS_Store
 
 # C extensions
 *.so
