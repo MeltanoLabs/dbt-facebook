@@ -1,9 +1,3 @@
-{{
-   config(
-     materialized='view'
-   )
-}}
- 
 SELECT ID::number as ID,
        TO_TIMESTAMP_NTZ(UPDATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as UPDATED_TIME,
        ACCOUNT_ID::number as ACCOUNT_ID,

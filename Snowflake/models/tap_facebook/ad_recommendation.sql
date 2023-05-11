@@ -1,9 +1,3 @@
-{{
-   config(
-     materialized='view'
-   )
-}}
-
 SELECT ID as AD_ID,
        TO_TIMESTAMP_NTZ(UPDATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as AD_UPDATED_TIME,
        PARSE_JSON(ARRAY_TO_STRING(PARSE_JSON(RECOMMENDATIONS), '')):code::number as CODE,

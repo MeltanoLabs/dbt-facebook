@@ -1,9 +1,3 @@
-{{
-   config(
-     materialized='view'
-   )
-}}
- 
 SELECT ACCOUNT_ID,
        ADLABELS,
        TO_TIMESTAMP_NTZ(CREATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as CAMPAIGN_CREATED_TIME,

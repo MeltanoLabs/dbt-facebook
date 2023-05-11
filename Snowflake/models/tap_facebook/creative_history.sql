@@ -1,9 +1,3 @@
-{{
-   config(
-     materialized='view'
-   )
-}}
- 
 SELECT ACCOUNT_ID::number as ACCOUNT_ID,
        ID,
        ACTOR_ID::number as ACTOR_ID,
@@ -107,4 +101,3 @@ SELECT ACCOUNT_ID::number as ACCOUNT_ID,
        _SDC_BATCHED_AT
 
 FROM {{ source('tap_facebook', 'creatives') }} as creative_history
-    

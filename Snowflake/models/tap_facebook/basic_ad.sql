@@ -1,9 +1,3 @@
-{{
-   config(
-     materialized='view'
-   )
-}}
- 
 SELECT AD_ID,
        CAST(DATE_START as date) as DATE,
        ACCOUNT_ID,

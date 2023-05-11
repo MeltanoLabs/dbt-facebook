@@ -1,9 +1,3 @@
-{{
-   config(
-     materialized='view'
-   )
-}}
- 
 SELECT AGE,
        AMOUNT_SPENT,
        BALANCE,

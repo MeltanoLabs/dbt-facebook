@@ -1,9 +1,3 @@
-{{
-   config(
-     materialized='view'
-   )
-}}
- 
 SELECT ID,
        CAST(TIME_UPDATED as datetime) as UPDATED_TIME,
        ACCOUNT_ID,
@@ -57,4 +51,3 @@ SELECT ID,
        _SDC_BATCHED_AT
 
 FROM {{ source('tap_facebook', 'customaudiences') }} as meltano_custom_audiences
- 

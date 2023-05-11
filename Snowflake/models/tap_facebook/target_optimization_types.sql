@@ -1,9 +1,3 @@
-{{
-   config(
-     materialized='view'
-   )
-}}
- 
 SELECT ID,
        UPDATED_TIME,
        NULL as INDEX, --add data for INDEX

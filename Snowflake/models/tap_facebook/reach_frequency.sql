@@ -1,9 +1,3 @@
-{{
-   config(
-     materialized='view'
-   )
-}}
- 
 SELECT ACCOUNT_ID,
       
       BUSINESS_COUNTRY_CODE,

@@ -1,9 +1,3 @@
-{{
-   config(
-     materialized='view'
-   )
-}}
- 
 SELECT ID as AD_SET_ID,
        CREATED_TIME as AD_SET_CREATED_TIME,
        UPDATED_TIME as AD_SET_UPDATED_TIME,

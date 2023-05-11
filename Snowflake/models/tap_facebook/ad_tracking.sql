@@ -1,9 +1,3 @@
-{{
-   config(
-     materialized='view'
-   )
-}}
- 
 SELECT ID as AD_ID,
        TO_TIMESTAMP_NTZ(UPDATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as AD_UPDATED_TIME,
        INDEX-1 as INDEX,
@@ -37,4 +31,3 @@ SELECT ID as AD_ID,
 
 FROM {{ source('tap_facebook', 'ads') }} as meltano_ad_tracking,
 lateral split_to_table(input=>ARRAY_TO_STRING(PARSE_JSON(TRACKING_SPECS), '|'), '|') TRACKING_COLUMNS
- 
