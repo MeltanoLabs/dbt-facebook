@@ -3,33 +3,13 @@
      materialized='view'
    )
 }}
-
-{% set json_column_query %}
-select distinct json.key as column_name
-
-FROM {{ source('tap_facebook', 'adsets')}},
-
-lateral flatten(input=>ATTRIBUTION_SPEC[0]) json
-{% endset %}
- 
-{% set attribution_spec_results = run_query(json_column_query) %}
-
-{% if execute %}
-{# Return the first column #}
-{% set attribution_spec_list = attribution_spec_results.columns[0].values() %}
-{% else %}
-{% set attribution_spec_list = [] %}
-{% endif %}
  
 SELECT ID as AD_SET_ID,
        TO_TIMESTAMP_NTZ(UPDATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as AD_SET_UPDATED_TIME,
-       0 as INDEX /* Add INDEX values for column*/
-       ATTRIBUTION_SPEC,
-       _SDC_BATCHED_AT,
+       INDEX-1 as INDEX,
+       PARSE_JSON(VALUE):event_type::varchar as EVENT_TYPE,
+       PARSE_JSON(VALUE):window_days::number as WINDOW_DAYS,
+       _SDC_BATCHED_AT
 
-
-{% for column_name in attribution_spec_list %}
-ATTRIBUTION_SPEC:{{column_name}}::varchar as {{column_name}}{%- if not loop.last %},{% endif -%}
-{% endfor %}
-
-FROM {{ source('tap_facebook', 'adsets') }} as ad_set_attribution
+FROM {{ source('tap_facebook', 'adsets') }} as ad_set_attribution,
+lateral split_to_table(input=>ARRAY_TO_STRING(PARSE_JSON(ATTRIBUTION_SPEC), '|'), '|') ATTRIBUTION_SPEC_COLUMN
