@@ -1,12 +1,12 @@
-SELECT ID as ADSET_ID,
-       TO_TIMESTAMP_NTZ(CREATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as CREATED_TIME,
-       0 as INDEX,
-       TO_TIMESTAMP_NTZ(UPDATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as UPDATED_TIME,
-       TO_TIMESTAMP_NTZ(START_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as START_TIME, 
-       TO_TIMESTAMP_NTZ(END_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as END_TIME,
-       MINUTE(TO_TIMESTAMP_NTZ(START_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM')) as START_MINUTE,
-       MINUTE(TO_TIMESTAMP_NTZ(END_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM')) as END_MINUTE,
+SELECT id as adset_id,
+       TO_TIMESTAMP_NTZ(created_time, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as created_time,
+       0 as index,
+       TO_TIMESTAMP_NTZ(updated_time, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as updated_time,
+       TO_TIMESTAMP_NTZ(start_time, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as start_time, 
+       TO_TIMESTAMP_NTZ(end_time, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as end_time,
+       MINUTE(TO_TIMESTAMP_NTZ(start_time, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM')) as start_minute,
+       MINUTE(TO_TIMESTAMP_NTZ(end_time, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM')) as end_minute,
        --TIMEZONE_TYPE
-       _SDC_BATCHED_AT
+       _sdc_batched_at
 
 FROM {{ source('tap_facebook', 'adsets') }} as meltano_ad_set_schedule

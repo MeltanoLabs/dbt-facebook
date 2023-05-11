@@ -1,9 +1,9 @@
-SELECT ID as AD_SET_ID,
-       TO_TIMESTAMP_NTZ(UPDATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as AD_SET_UPDATED_TIME,
-       INDEX-1 as INDEX,
-       PARSE_JSON(VALUE):event_type::varchar as EVENT_TYPE,
-       PARSE_JSON(VALUE):window_days::number as WINDOW_DAYS,
-       _SDC_BATCHED_AT
+SELECT id as ad_set_id,
+       TO_TIMESTAMP_NTZ(updated_time, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as ad_set_updated_time,
+       index-1 as index,
+       PARSE_JSON(value):event_type::varchar as event_type,
+       PARSE_JSON(value):window_days::number as window_days,
+       _sdc_batched_at
 
 FROM {{ source('tap_facebook', 'adsets') }} as ad_set_attribution,
-lateral split_to_table(input=>ARRAY_TO_STRING(PARSE_JSON(ATTRIBUTION_SPEC), '|'), '|') ATTRIBUTION_SPEC_COLUMN
+lateral split_to_table(input=>ARRAY_TO_STRING(PARSE_JSON(attribution_spec), '|'), '|') attribution_spec_column

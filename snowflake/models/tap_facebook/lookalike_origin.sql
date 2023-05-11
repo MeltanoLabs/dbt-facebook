@@ -1,9 +1,9 @@
-SELECT ID AS CUSTOM_AUDIENCE_ID,
-       CAST(TIME_UPDATED as datetime) as CUSTOM_AUDIENCE_UPDATED_TIME,
-        NULL as INDEX, --add data for INDEX
-        NAME,
+SELECT id AS custom_audience_id,
+       CAST(time_updated as datetime) as custom_audience_updated_time,
+        NULL as index, --add data for INDEX
+        name,
         --TYPE
         --ORIGIN_CUSTOM_AUDIENCE_ID
-       _SDC_BATCHED_AT
+       _sdc_batched_at
 
 FROM {{ source('tap_facebook', 'customaudiences') }} as meltano_custom_audiences

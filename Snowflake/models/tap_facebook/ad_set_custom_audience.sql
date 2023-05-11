@@ -1,6 +1,6 @@
-SELECT ID,
-       TO_TIMESTAMP_NTZ(UPDATED_TIME, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as UPDATED_TIME,
-       _SDC_BATCHED_AT
+SELECT id,
+       TO_TIMESTAMP_NTZ(updated_time, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as updated_time,
+       _sdc_batched_at
       --CUSTOM_AUDIENCE_ID, 
       --IS_EXCLUDED
 

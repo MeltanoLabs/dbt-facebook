@@ -1,20 +1,20 @@
-SELECT HASH,
-       ID,
-       UPDATED_TIME,
-       ACCOUNT_ID,
-       CREATED_TIME,
-       CREATIVES,
-       HEIGHT,
-       IS_ASSOCIATED_CREATIVES_IN_ADGROUPS as IS_ASSOCIATED_IN_ADGROUPS,
-       NAME,
-       ORIGINAL_HEIGHT,
-       ORIGINAL_WIDTH,
-       PERMALINK_URL,
-       STATUS,
-       URL,
-       URL_128,
-       WIDTH,
-       _SDC_BATCHED_AT
+SELECT hash,
+       id,
+       updated_time,
+       account_id,
+       created_time,
+       creatives,
+       height,
+       is_associated_creatives_in_adgroups as is_associated_in_adgroups,
+       name,
+       original_height,
+       original_width,
+       permalink_url,
+       status,
+       url,
+       url_128,
+       width,
+       _sdc_batched_at
 
 
-FROM RYAN_MIRANDA_RAW.MELTANO_FACEBOOK.ADIMAGES
+FROM ryan_miranda_raw.meltano_facebook.adimages

@@ -1,7 +1,7 @@
-SELECT ID,
-       UPDATED_TIME,
-       NULL as INDEX, --add data for INDEX
+SELECT id,
+       updated_time,
+       NULL as index, --add data for INDEX
       --VALUE
       --KEY
-       _SDC_BATCHED_AT
+       _sdc_batched_at
 FROM {{ source('tap_facebook', 'adsets') }} as meltano_ad_set_target_optimization
