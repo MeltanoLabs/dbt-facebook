@@ -81,4 +81,4 @@ SELECT age,
        id,
        _sdc_batched_at
 
-FROM {{ source('tap_facebook', 'adaccounts') }} as account_history
+FROM {{ source('tap_facebook', 'adaccounts') }}

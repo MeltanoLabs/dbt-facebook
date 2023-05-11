@@ -3,4 +3,4 @@ SELECT id AS custom_audience_id,
         --COUNTRY
        _sdc_batched_at
 
-FROM {{ source('tap_facebook', 'customaudiences') }} as meltano_custom_audiences
+FROM {{ source('tap_facebook', 'customaudiences') }}

@@ -38,4 +38,4 @@ SELECT id,
        from_object,
        _sdc_batched_at
 
-FROM {{ source('tap_facebook', 'advideos') }} as ad_video_history
+FROM {{ source('tap_facebook', 'advideos') }} 

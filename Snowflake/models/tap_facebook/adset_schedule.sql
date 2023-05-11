@@ -9,4 +9,4 @@ SELECT id as adset_id,
        --TIMEZONE_TYPE
        _sdc_batched_at
 
-FROM {{ source('tap_facebook', 'adsets') }} as meltano_ad_set_schedule
+FROM {{ source('tap_facebook', 'adsets') }}

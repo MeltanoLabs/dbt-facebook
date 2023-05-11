@@ -5,4 +5,4 @@ SELECT account_id,
        TO_TIMESTAMP_NTZ(updated_time, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as campaign_updated_time,
        _sdc_batched_at
        
-FROM {{ source('tap_facebook', 'campaigns') }} as campaign_label
+FROM {{ source('tap_facebook', 'campaigns') }} 

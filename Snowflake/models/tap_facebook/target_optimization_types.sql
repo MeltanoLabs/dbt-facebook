@@ -4,4 +4,4 @@ SELECT id,
       --VALUE
       --KEY
        _sdc_batched_at
-FROM {{ source('tap_facebook', 'adsets') }} as meltano_ad_set_target_optimization
+FROM {{ source('tap_facebook', 'adsets') }}

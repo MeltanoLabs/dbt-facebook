@@ -29,5 +29,5 @@ SELECT id as ad_id,
        CAST(PARSE_JSON(value):"conversion_id" as variant) as conversion_id,
        _sdc_batched_at
 
-FROM {{ source('tap_facebook', 'ads') }} as meltano_ad_conversion,
+FROM {{ source('tap_facebook', 'ads') }},
 lateral split_to_table(input=>ARRAY_TO_STRING(PARSE_JSON(conversion_specs), '|'), '|') conversion_columns

@@ -17,4 +17,4 @@ SELECT hash,
        _sdc_batched_at
 
 
-FROM ryan_miranda_raw.meltano_facebook.adimages
+FROM {{ source('tap_facebook', 'adimages') }}

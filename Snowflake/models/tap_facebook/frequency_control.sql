@@ -7,4 +7,4 @@ SELECT id as ad_set_id,
        billing_event as event,
        _sdc_batched_at
        
-FROM {{ source('tap_facebook', 'adsets') }} as frequency_control
+FROM {{ source('tap_facebook', 'adsets') }}

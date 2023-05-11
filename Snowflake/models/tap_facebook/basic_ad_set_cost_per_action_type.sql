@@ -8,5 +8,5 @@ SELECT adset_id,
        CASE WHEN _7_d_click IS NULL AND REPLACE(PARSE_JSON(value):"1d_view", '"', '') IS NULL THEN REPLACE(PARSE_JSON(value):"value", '"','') ELSE NULL END::float as inline,
        REPLACE(PARSE_JSON(value):"1d_view", '"', '')::float as _1_d_view
 
-FROM {{ source('tap_facebook', 'adsinsights') }} meltano_basic_ad_set_cost_per_action_type,
+FROM {{ source('tap_facebook', 'adsinsights') }},
 lateral split_to_table(input=>ARRAY_TO_STRING(PARSE_JSON(cost_per_action_type), '|'), '|') cost_per_action_type_column

@@ -5,4 +5,4 @@ SELECT id,
        name,
        _sdc_batched_at       
 
-FROM {{ source('tap_facebook', 'adlabels') }} as label_history
+FROM {{ source('tap_facebook', 'adlabels') }}
