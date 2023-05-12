@@ -27,7 +27,7 @@ SELECT age,
        min_campaign_group_spend_cap,
        min_daily_budget,
        name,
-       null as next_bill_date,
+       null as next_bill_date, -- add data for next_bill_date
        offsite_pixels_tos_accepted,
        owner,
        partner,
