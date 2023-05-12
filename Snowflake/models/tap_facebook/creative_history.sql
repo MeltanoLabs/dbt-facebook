@@ -100,4 +100,4 @@ SELECT account_id::number as account_id,
        PARSE_JSON(asset_feed_spec):link_urls as asset_feed_spec_link_urls,
        _sdc_batched_at
 
-FROM {{ source('tap_facebook', 'creatives') }} as creative_history
+FROM {{ source('tap_facebook', 'creatives') }} 

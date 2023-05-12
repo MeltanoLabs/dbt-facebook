@@ -113,4 +113,4 @@ SELECT id::number as id,
        bid_info:IMPRESSIONS::number as bid_info_impressions,
        _sdc_batched_at
 
-FROM {{ source('tap_facebook', 'adsets') }} as meltano_ad_set_history
+FROM {{ source('tap_facebook', 'adsets') }}

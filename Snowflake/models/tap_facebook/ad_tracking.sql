@@ -29,5 +29,5 @@ SELECT id as ad_id,
        CAST(PARSE_JSON(value):"question_creator" as variant) as question_creator,
        _sdc_batched_at
 
-FROM {{ source('tap_facebook', 'ads') }} as meltano_ad_tracking,
+FROM {{ source('tap_facebook', 'ads') }},
 lateral split_to_table(input=>ARRAY_TO_STRING(PARSE_JSON(tracking_specs), '|'), '|') tracking_columns

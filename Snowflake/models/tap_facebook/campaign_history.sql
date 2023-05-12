@@ -49,4 +49,4 @@ SELECT id,
        _sdc_batched_at
 
 
-FROM {{ source('tap_facebook', 'campaigns') }} as meltano_campaigns_history
+FROM {{ source('tap_facebook', 'campaigns') }} 

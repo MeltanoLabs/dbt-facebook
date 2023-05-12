@@ -9,4 +9,4 @@ SELECT id as ad_id,
        recommendation_data,
        _sdc_batched_at
 
-FROM {{ source('tap_facebook', 'ads') }} as meltano_ad_recommendation
+FROM {{ source('tap_facebook', 'ads') }}

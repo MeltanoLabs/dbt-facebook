@@ -12,4 +12,4 @@ SELECT account_id,
        TO_TIMESTAMP_NTZ(updated_time, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM') as updated_time,
        _sdc_batched_at
 
-FROM {{ source('tap_facebook', 'campaigns') }} as meltano_ad_campaign_issues_info
+FROM {{ source('tap_facebook', 'campaigns') }}

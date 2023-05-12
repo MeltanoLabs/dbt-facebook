@@ -5,4 +5,4 @@ SELECT id as ad_set_id,
        _sdc_batched_at
 
 
-FROM {{ source('tap_facebook', 'adsets') }} as pacing_type
+FROM {{ source('tap_facebook', 'adsets') }}

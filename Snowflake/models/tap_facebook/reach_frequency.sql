@@ -6,4 +6,4 @@ SELECT account_id,
        --MIN_CAMPAIGN_DURATION,
        --MAX_CAMPAIGN_DURATION
       _sdc_batched_at
-FROM {{ source('tap_facebook', 'adaccounts') }} as reach_frequency
+FROM {{ source('tap_facebook', 'adaccounts') }}

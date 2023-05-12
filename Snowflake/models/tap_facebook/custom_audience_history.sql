@@ -50,4 +50,4 @@ SELECT id,
        CAST(time_created as datetime) as created_time,
        _sdc_batched_at
 
-FROM {{ source('tap_facebook', 'customaudiences') }} as meltano_custom_audiences
+FROM {{ source('tap_facebook', 'customaudiences') }} 

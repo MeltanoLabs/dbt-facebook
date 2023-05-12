@@ -4,4 +4,4 @@ SELECT id,
       --CUSTOM_AUDIENCE_ID, 
       --IS_EXCLUDED
 
-FROM {{ source('tap_facebook', 'adsets') }} as meltano_ad_set_custom_audience
+FROM {{ source('tap_facebook', 'adsets') }}

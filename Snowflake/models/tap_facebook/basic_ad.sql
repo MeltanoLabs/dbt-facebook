@@ -16,4 +16,4 @@ SELECT ad_id,
        _sdc_batched_at
 
 
-FROM {{ source('tap_facebook', 'adsinsights') }} as meltano_basic_ads
+FROM {{ source('tap_facebook', 'adsinsights') }} 

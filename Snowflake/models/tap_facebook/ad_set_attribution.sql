@@ -5,5 +5,5 @@ SELECT id as ad_set_id,
        PARSE_JSON(value):window_days::number as window_days,
        _sdc_batched_at
 
-FROM {{ source('tap_facebook', 'adsets') }} as ad_set_attribution,
+FROM {{ source('tap_facebook', 'adsets') }},
 lateral split_to_table(input=>ARRAY_TO_STRING(PARSE_JSON(attribution_spec), '|'), '|') attribution_spec_column

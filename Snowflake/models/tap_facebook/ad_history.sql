@@ -65,4 +65,4 @@ SELECT id::number as id,
        global_ads_about_social_issues_elections_or_politics,
        _sdc_batched_at
 
-FROM {{ source('tap_facebook', 'ads') }} as ad_history
+FROM {{ source('tap_facebook', 'ads') }}
