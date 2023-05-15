@@ -6,5 +6,5 @@ SELECT id AS custom_audience_id,
        --ORIGIN_CUSTOM_AUDIENCE_ID
        _sdc_batched_at
 
-FROM {{ source('tap_facebook', 'customaudiences') }} meltano_lookalike_origin,
+FROM {{ source('tap_facebook', 'customaudiences') }},
 lateral split_to_table(input=>CAST(id as varchar), '|') LOOKALIKE_COLUMN

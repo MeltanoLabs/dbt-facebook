@@ -4,5 +4,5 @@ SELECT id as ad_set_id,
        ARRAY_TO_STRING(PARSE_JSON(pacing_type), '|') as name,
        _sdc_batched_at
 
-FROM {{ source('tap_facebook', 'adsets') }} as meltano_pacing_type,
+FROM {{ source('tap_facebook', 'adsets') }},
 lateral split_to_table(input=>ARRAY_TO_STRING(PARSE_JSON(pacing_type), '|'), '|') PACING_TYPE_COLUMN
