@@ -24,3 +24,7 @@ clean-targets:
 - logs
 models:
   my_meltano_project: null
+vars:
+  frequency_control:
+    max_frequency: 1
+    interval_days: 7  
