@@ -1,19 +1,20 @@
-SELECT adset_id,
-       CAST(date_start as date) as date,
-       account_id,
-       impressions,
-       inline_link_clicks,
-       reach,
-       CAST(cost_per_inline_link_click as float) as cost_per_inline_link_click,
-       CAST(cpc as float) as cpc,
-       CAST(cpm as float) as cpm,
-       CAST(ctr as float) as ctr,
-       CAST(frequency as float) as frequency,
-       CAST(spend as float) as spend,
-       adset_name,
-       campaign_name,
-       inline_link_click_ctr,
-       _sdc_batched_at
+SELECT
+    adset_id,
+    CAST(date_start AS date) AS date,
+    account_id,
+    impressions,
+    inline_link_clicks,
+    reach,
+    CAST(cost_per_inline_link_click AS float) AS cost_per_inline_link_click,
+    CAST(cpc AS float) AS cpc,
+    CAST(cpm AS float) AS cpm,
+    CAST(ctr AS float) AS ctr,
+    CAST(frequency AS float) AS frequency,
+    CAST(spend AS float) AS spend,
+    adset_name,
+    campaign_name,
+    inline_link_click_ctr,
+    _sdc_batched_at
 
 
-FROM {{ source('tap_facebook', 'adsinsights') }} 
+FROM {{ source('tap_facebook', 'adsinsights') }}
