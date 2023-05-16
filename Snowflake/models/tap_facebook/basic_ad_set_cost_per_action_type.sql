@@ -1,18 +1,20 @@
 SELECT
     adset_id,
     CAST(date_start AS date) AS date,
-    REPLACE(PARSE_JSON(value):"action_type", '"', '')::varchar AS action_type,
-    REPLACE(PARSE_JSON(value):"value", '"', '')::float AS value,
-    REPLACE(PARSE_JSON(value):"7d_click", '"', '')::float AS _7_d_click,
+    CAST(
+        REPLACE(PARSE_JSON(value):"action_type", '"', '') AS varchar
+    ) AS action_type,
+    CAST(REPLACE(PARSE_JSON(value):"value", '"', '') AS float) AS value,
+    CAST(REPLACE(PARSE_JSON(value):"7d_click", '"', '') AS float) AS _7_d_click,
     index - 1 AS index,
     _sdc_batched_at,
-    CASE
+    CAST(CASE
         WHEN
             _7_d_click IS NULL
             AND REPLACE(PARSE_JSON(value):"1d_view", '"', '') IS NULL
             THEN REPLACE(PARSE_JSON(value):"value", '"', '')
-    END::float AS inline,
-    REPLACE(PARSE_JSON(value):"1d_view", '"', '')::float AS _1_d_view
+    END AS float) AS inline,
+    CAST(REPLACE(PARSE_JSON(value):"1d_view", '"', '') AS float) AS _1_d_view
 
 FROM {{ source('tap_facebook', 'adsinsights') }},
     LATERAL SPLIT_TO_TABLE(
