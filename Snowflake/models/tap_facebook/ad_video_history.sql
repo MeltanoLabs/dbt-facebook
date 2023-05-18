@@ -1,0 +1,46 @@
+SELECT
+    id,
+    TO_TIMESTAMP_NTZ(
+        updated_time, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM'
+    ) AS updated_time,
+    account_id,
+    ad_breaks,
+    backdated_time,
+    backdated_time_granularity,
+    content_category,
+    content_tags,
+    TO_TIMESTAMP_NTZ(
+        created_time, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM'
+    ) AS created_time,
+    custom_labels,
+    description,
+    embed_html,
+    embeddable,
+    event,
+    format,
+    icon,
+    is_crosspost_video,
+    is_crossposting_eligible,
+    is_episode,
+    is_instagram_eligible,
+    is_reference_only,
+    length::float AS length,
+    live_status,
+    music_video_copyright,
+    permalink_url,
+    place,
+    post_views,
+    premiere_living_room_status,
+    privacy,
+    published,
+    scheduled_publish_time,
+    source,
+    status_processing_progress,
+    status_value,
+    title,
+    universal_video_id,
+    views,
+    from_object,
+    _sdc_batched_at
+
+FROM {{ source('tap_facebook', 'advideos') }}

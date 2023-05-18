@@ -4,11 +4,10 @@ SELECT
         updated_time, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM'
     ) AS ad_set_updated_time,
     index - 1 AS index,
-    PARSE_JSON(value):event_type::varchar AS event_type,
-    PARSE_JSON(value):window_days::number AS window_days,
+    billing_event AS event,
+    {{ var("frequency_control")["interval_days"] }} AS interval_days,
+    {{ var("frequency_control")["max_frequency"] }} AS max_frequency,
     _sdc_batched_at
 
 FROM {{ source('tap_facebook', 'adsets') }},
-    LATERAL SPLIT_TO_TABLE(
-        input => ARRAY_TO_STRING(PARSE_JSON(attribution_spec), '|'), '|'
-    )
+    LATERAL SPLIT_TO_TABLE(input => billing_event, '|')

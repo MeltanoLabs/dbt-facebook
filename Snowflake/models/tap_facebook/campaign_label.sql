@@ -1,15 +1,13 @@
-{{
-   config(
-     materialized='table'
-   )
-}}
- 
-SELECT ACCOUNT_ID,
-       AD_LABEL_ID,
-       ADLABELS,
-       CREATED_TIME,
-       ID,
-       PROMOTED_OBJECT,
-       SOURCE_CAMPAIGN_ID,
-       UPDATED_TIME
-FROM {{ source('tap_facebook', 'campaign_label') }} as meltano_campaign_label
+SELECT
+    account_id,
+    adlabels,
+    TO_TIMESTAMP_NTZ(
+        created_time, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM'
+    ) AS campaign_created_time,
+    id,
+    TO_TIMESTAMP_NTZ(
+        updated_time, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM'
+    ) AS campaign_updated_time,
+    _sdc_batched_at
+
+FROM {{ source('tap_facebook', 'campaigns') }}

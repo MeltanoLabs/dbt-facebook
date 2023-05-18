@@ -1,21 +1,172 @@
 version: 2
 sources:
   - name: tap_facebook
-    loader: meltano
-    schema: PROD_MELTANO_FACEBOOK
+    schema: MELTANO_FACEBOOK
     tables: 
-      - name: ad_history
-      - name: ad_set_history
-      - name: campaign_history
-      - name: ad_conversion
-      - name: campaign_label
-      - name: ad_group_issues_info
-      - name: ad_recommendation
-      - name: adset_schedule
-      - name: ad_campaign_issues_info
-      - name: ad_set_attribution
-      - name: ad_tracking
-      
-
-      
-      
+      - name: ads
+      - name: adsets
+      - name: adsinsights
+      - name: campaigns
+      - name: creatives
+      - name: adlabels
+      - name: adaccounts
+      - name: customconversions
+      - name: customaudiences
+      - name: adimages
+      - name: advideos
+models:
+  - name: account_history
+    columns:
+      - name: id
+        tests:
+          - not_null
+  - name: ad_campaign_issues_info
+    columns:
+      - name: id
+        tests:
+          - not_null
+  - name: ad_conversion
+    columns:
+      - name: ad_id
+        tests:
+          - not_null
+  - name: ad_group_issues_info
+    columns:
+      - name: id
+        tests:
+          - not_null
+  - name: ad_history
+    columns:
+      - name: id
+        tests:
+          - not_null
+  - name: ad_image_history
+    columns:
+      - name: id
+        tests:
+          - not_null
+  - name: ad_recommendation
+    columns:
+      - name: ad_id
+        tests:
+          - not_null
+  - name: ad_set_attribution
+    columns:
+      - name: ad_set_id
+        tests:
+          - not_null
+  - name: ad_set_custom_audience
+    columns:
+      - name: id
+        tests:
+          - not_null
+  - name: ad_set_history
+    columns:
+      - name: id
+        tests:
+          - not_null
+  - name: ad_tracking
+    columns:
+      - name: ad_id
+        tests:
+          - not_null
+  - name: ad_video_history
+    columns:
+      - name: id
+        tests:
+          - not_null
+  - name: adset_schedule
+    columns:
+      - name: adset_id
+        tests:
+          - not_null
+  - name: basic_ad_actions
+    columns:
+      - name: ad_id
+        tests:
+          - not_null
+  - name: basic_ad_cost_per_action_type
+    columns:
+      - name: ad_id
+        tests:
+          - not_null
+  - name: basic_ad_set_actions
+    columns:
+      - name: adset_id
+        tests:
+          - not_null
+  - name: basic_ad_set_cost_per_action_type
+    columns:
+      - name: adset_id
+        tests:
+          - not_null
+  - name: basic_ad_set
+    columns:
+      - name: adset_id
+        tests:
+          - not_null
+  - name: basic_ad
+    columns:
+      - name: ad_id
+        tests:
+          - not_null
+  - name: campaign_history
+    columns:
+      - name: id
+        tests:
+          - not_null
+  - name: campaign_label
+    columns:
+      - name: id
+        tests:
+          - not_null
+  - name: creative_history
+    columns:
+      - name: id
+        tests:
+          - not_null
+  - name: custom_audience_history
+    columns:
+      - name: id
+        tests:
+          - not_null
+  - name: custom_conversion_history
+    columns:
+      - name: id
+        tests:
+          - not_null
+  - name: frequency_control
+    columns:
+      - name: ad_set_id
+        tests:
+          - not_null
+  - name: label_history
+    columns:
+      - name: id
+        tests:
+          - not_null
+  - name: lookalike_origin
+    columns:
+      - name: custom_audience_id
+        tests:
+          - not_null
+  - name: lookalike_target_country
+    columns:
+      - name: custom_audience_id
+        tests:
+          - not_null
+  - name: pacing_type
+    columns:
+      - name: ad_set_id
+        tests:
+          - not_null
+  - name: reach_frequency
+    columns:
+      - name: account_id
+        tests:
+          - not_null
+  - name: target_optimization_types
+    columns:
+      - name: id
+        tests:
+          - not_null

@@ -1,21 +1,17 @@
-{{
-   config(
-     materialized='table'
-   )
-}}
- 
-SELECT ACCOUNT_ID,
-       ADLABELS,
-       BLAME_FIELD,
-       CODE,
-       CONFIDENCE,
-       CREATED_TIME,
-       ID,
-       IMPORTANCE,
-       INDEX,
-       MESSAGE,
-       PROMOTED_OBJECT,
-       RECOMMENDATION_DATA,
-       TITLE,
-       UPDATED_TIME
-FROM {{ source('tap_facebook', 'adset_schedule') }} as meltano_adset_schedule
+SELECT
+    id AS ad_set_id,
+    TO_TIMESTAMP_NTZ(
+        updated_time, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM'
+    ) AS ad_set_updated_time,
+    index - 1 AS index,
+    MINUTE(
+        TO_TIMESTAMP_NTZ(start_time, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM')
+    ) AS start_minute,
+    MINUTE(
+        TO_TIMESTAMP_NTZ(end_time, 'YYYY-MM-DD"T"HH24:MI:SSTZHTZM')
+    ) AS end_minute,
+    --TIMEZONE_TYPE
+    _sdc_batched_at
+
+FROM {{ source('tap_facebook', 'adsets') }},
+    LATERAL SPLIT_TO_TABLE(input => CAST(id AS varchar), '|')
