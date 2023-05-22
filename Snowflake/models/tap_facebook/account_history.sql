@@ -80,7 +80,7 @@ SELECT
     extended_credit_invoice_group_emails,
     extended_credit_invoice_group_name,
     capabilities,
-    id,
+    account_id as id,
     _sdc_batched_at
 
 FROM {{ source('tap_facebook', 'adaccounts') }}
