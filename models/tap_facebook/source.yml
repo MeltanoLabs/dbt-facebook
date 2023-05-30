@@ -1,7 +1,8 @@
 version: 2
 sources:
   - name: tap_facebook
-    schema: MELTANO_FACEBOOK
+    database: "{{ var('facebook_database') }}"
+    schema: "{{ var ('facebook_schema', 'tap_facebook') }}"
     tables: 
       - name: ads
       - name: adsets

@@ -1,10 +1,10 @@
-name: my_meltano_project
+name: 'dbt_facebook'
 version: '1.0'
-profile: RYAN-MIRANDA-RAW-FACEBOOK
+profile: 'dbt_facebook'
 config-version: 2
 require-dbt-version: [">=1.0.0", "<2.0.0"]
 model-paths:
-- Snowflake/models
+- models
 analysis-paths:
 - analysis
 test-paths:
@@ -22,9 +22,7 @@ clean-targets:
 - ../.meltano/transformers/dbt/target
 - dbt_packages
 - logs
-models:
-  my_meltano_project: null
 vars:
   frequency_control:
     max_frequency: 1
-    interval_days: 7  
+    interval_days: 7
